@@ -1,0 +1,54 @@
+# Folders
+bin/
+obj/
+
+# Files
+*.log
+*.UserSettings
+
+# JetBrains Rider
+.idea/
+/*.DotSettings*
+
+# MonoDevelop
+*.userprefs
+
+# Visual Studio
+.vs/
+.vsconfig
+
+# Visual Studio Code
+.vscode/
+
+# Unity folders
+Builds/
+Library/
+Logs/
+Temp/
+UserSettings/
+
+# Unity files
+/*.csproj
+/*.sln
+Packages/packages-lock.json
+
+# Unity Addressables
+Assets/AddressableAssetsData/*/*.bin*
+Assets/AddressableAssetsData/link.xml*
+
+# Unity CodeCoverage
+CodeCoverage/
+ProjectSettings/Packages/com.unity.testtools.codecoverage/
+
+# Unity Recordings
+Recordings/
+
+# Unity Samples
+Assets/Samples*
+
+# Unity Scenes
+Assets/GlobalEntitiesDependencies*
+Assets/SceneDependencyCache*
+
+# Unity UI Toolkit
+UIElementsSchema/
