@@ -5,7 +5,7 @@ public class Sensor : MonoBehaviour
 {
     [SerializeField] private float range = 1f;
     [SerializeField] private LayerMask targetLayerMask;
-    private bool _haveTarget = false;
+    [SerializeField] private bool _haveTarget = false;
     private Collider2D[] _colliders;
     public bool HaveTarget => _haveTarget;
     

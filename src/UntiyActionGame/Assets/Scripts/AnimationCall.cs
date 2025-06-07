@@ -17,7 +17,7 @@ public class AnimationCall : MonoBehaviour
         if (!string.IsNullOrEmpty(animationName) && !_animator.GetCurrentAnimatorStateInfo(0).IsName(animationName))
             return;
         #if UNITY_EDITOR
-        Debug.Log("Animation Call", this);
+        Debug.Log($"Animation Call: {animationName}", this);
         #endif
         executeEvent?.Invoke();
     }
