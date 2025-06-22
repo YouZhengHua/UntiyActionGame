@@ -1,6 +1,6 @@
 using Player;
 using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
+using UnityEngine;
 
 namespace StateMachine
 {
@@ -8,7 +8,15 @@ namespace StateMachine
     {
         public PlayerStateIdle(IPlayerManager player, IStateMachine stateMachine, InputActionReference jump, InputActionReference attack) : base(player, stateMachine, jump, attack)
         {
+
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
             
+            _playerManager.Rigidbody.linearVelocity = new Vector2(0f, _playerManager.Rigidbody.linearVelocity.y);
+            _playerManager.CharacterAnimator.SetFloat(PlayerAnimationName.Move, 0f);
         }
 
         public override void Update()

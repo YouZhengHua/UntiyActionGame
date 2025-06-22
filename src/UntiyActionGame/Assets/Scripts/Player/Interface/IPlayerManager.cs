@@ -36,7 +36,7 @@ namespace Player
         public IState fail { get; }
         
         public bool IsGrounded { get; }
-        
-        public void SetLocalEulerAngles(Vector3 localEulerAngles);
+
+        public void SetMoveSpeed();
     }
 }

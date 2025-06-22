@@ -5,8 +5,8 @@ namespace StateMachine
 {
     public class PlayerStateGround : PlayerStateBase
     {
-        protected InputActionReference _jump, _attack; 
-        public PlayerStateGround(IPlayerManager player, IStateMachine stateMachine, InputActionReference jump, InputActionReference attack) : base(player, stateMachine)
+        private readonly InputActionReference _jump, _attack; 
+        protected PlayerStateGround(IPlayerManager player, IStateMachine stateMachine, InputActionReference jump, InputActionReference attack) : base(player, stateMachine)
         {
             _jump = jump;
             _attack = attack;

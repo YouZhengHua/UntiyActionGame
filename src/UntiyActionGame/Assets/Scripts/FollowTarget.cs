@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FollowTarget : MonoBehaviour
 {
-    [SerializeField] private Transform? target = null;
+    [SerializeField] private Transform target = null;
 
     private void Start()
     {

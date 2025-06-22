@@ -24,7 +24,7 @@ namespace Player
         [field:SerializeField] public float JumpForce { get; private set; }
         [SerializeField] private InputActionReference jumpInput;
         [SerializeField] private InputActionReference attackInput;
-        
+
         private Sensor _groundSensor;
         public bool IsGrounded => _groundSensor == null || _groundSensor.HaveTarget;
         private bool _canJump = true;
@@ -75,7 +75,7 @@ namespace Player
             Idle = new PlayerStateIdle(this, _stateMachine, jumpInput, attackInput);
             Move = new PlayerStateMove(this, _stateMachine, jumpInput, attackInput);
             Jump = new PlayerStateJump(this, _stateMachine);
-            Attack = new PlayerStateAttack(this, _stateMachine);
+            Attack = new PlayerStateAttack(this, _stateMachine, attackInput);
             Dead = new PlayerStateDead(this, _stateMachine);
             fail = new PlayerStateFail(this, _stateMachine);
 
@@ -116,9 +116,26 @@ namespace Player
             MovementInput = new Vector2(MovementInput.x, 0f);
         }
 
-        public void SetLocalEulerAngles(Vector3 localEulerAngles)
+        public void SetMoveSpeed()
         {
-            this.transform.localEulerAngles = localEulerAngles;
+            this.Rigidbody.AddForce(this.MovementInput * this.MoveSpeed, ForceMode2D.Impulse);
+
+            // 設定速度上限
+            if (Mathf.Abs(this.Rigidbody.linearVelocity.x) > this.MoveSpeed)
+            {
+                this.Rigidbody.linearVelocity = new Vector2((this.Rigidbody.linearVelocity.x > 0f ? 1f : -1f) * this.MoveSpeed,
+                    this.Rigidbody.linearVelocity.y);
+            }
+            
+            this.CharacterAnimator.SetFloat(PlayerAnimationName.Move, Mathf.Abs(this.MovementInput.x));
+            if (this.MovementInput.x > 0f)
+            {
+                this.transform.localEulerAngles = (new Vector3(0f, 0f, 0f));
+            }
+            else if (this.MovementInput.x < 0f)
+            {
+                this.transform.localEulerAngles = (new Vector3(0f, 180f, 0f));
+            }
         }
 
         public Action JumpEnter;
@@ -138,23 +155,6 @@ namespace Player
             CharacterAnimator.SetTrigger(PlayerAnimationName.Jump);
         }
 
-        private void OnAttack(InputAction.CallbackContext context)
-        {
-            // 死亡時不執行
-            if (_isDead || !context.action.WasPressedThisFrame())
-                return;
-
-            if (_inAttack == false)
-            {
-                _inAttack = true;
-                CharacterAnimator.SetTrigger(PlayerAnimationName.Attack);
-            }
-            else
-            {
-                CharacterAnimator.SetTrigger(PlayerAnimationName.AttackCombo);
-            }
-        }
-
         public void OnJumpEnd()
         {
         }
@@ -165,6 +165,7 @@ namespace Player
 
         public void OnAttackEnd()
         {
+            _stateMachine.SwitchState(Idle);
         }
     }
 }
